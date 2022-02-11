@@ -11,7 +11,7 @@
       <!--drop down menu-->
       <v-menu color="grey">
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="grey" flat text v-bind="attrs" v-on="on">
+          <v-btn color="grey" text v-bind="attrs" v-on="on">
             <v-icon left>expand_more</v-icon>
             Menu
           </v-btn>
@@ -23,7 +23,7 @@
         </v-list>
       </v-menu>
 
-      <v-btn text flat color="grey">
+      <v-btn text color="grey">
         <span>Sign out</span>
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
