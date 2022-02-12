@@ -72,12 +72,6 @@ export default {
         {icon: 'folder', text: 'My Projects', route: '/projects'},
         {icon: 'person', text: 'Team', route: '/team'},
       ],
-      items: [
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me' },
-        { title: 'Click Me 2' },
-      ],
     }
   }
 }
