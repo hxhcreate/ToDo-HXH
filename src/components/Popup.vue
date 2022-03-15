@@ -24,22 +24,23 @@
                       :rules="inputRules"></v-textarea>
 
         <!--          date pick-->
-          <v-menu :close-on-content-click="true"
+          <v-menu :close-on-content-click="false"
                   v-model="date_picker"
                   max-width="290">
             <template v-slot:activator="{on, attrs}">
               <v-text-field
+                  :value="formattedDate"
                   label="Due date"
                   prepend-icon="date_range"
-                  v-bind="attrs" v-on="on"
-                  :value="formattedDate"
+                  v-bind="attrs"
+                  v-on="on"
                   clearable
                   readonly
                   @click:clear="date = null"
               ></v-text-field>
             </template>
             <v-date-picker v-model="date"
-              @click="date_picker = false"
+              @change="date_picker = false"
             ></v-date-picker>
           </v-menu>
 
@@ -54,13 +55,17 @@
 
 <script>
 import {format, parseISO} from 'date-fns'
+
+//firestore database
+import db from "@/fb"
+import {collection, addDoc} from "firebase/firestore"
 export default {
   name: "Popup",
   data() {
     return {
       title: '',
       content: '',
-      date: format(parseISO(new Date().toISOString()), 'yyyy-MM-dd'),
+      date: null,
       date_picker: false,
       //表单验证的写法
       inputRules: [
@@ -69,15 +74,29 @@ export default {
     }
   },
   methods: {
-    submit() {
-      if (this.$refs.form.validate()){
-        console.log(this.title, this.content)
+    async submit() {
+      if (this.$refs.form.validate()) {
+        console.log(db)
+        try {
+          const docRef = await addDoc(collection(db, "projects"), {
+            title: this.title,
+            content: this.content,
+            due: format(parseISO(this.date), 'do MMM yyyy'),
+            person: 'The Net Xuhao',
+            status: 'ongoing'
+          })
+          console.log("Document written with ID: ", docRef.id)
+
+        } catch (e) {
+          console.error(e)
+        }
+
       }
     }
   },
   computed: {
     formattedDate() {
-      return this.date ? format(parseISO(this.date), 'EEEE, MMMM do yyyy') : ''
+      return this.date ? format(parseISO(this.date), 'do MMM yyyy') : ''
     }
   }
 }
