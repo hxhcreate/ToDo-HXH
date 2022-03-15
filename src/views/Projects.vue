@@ -23,22 +23,36 @@
 </template>
 
 <script>
+import db from "@/fb";
+
 export default {
   name: "Projects",
   data() {
     return {
       projects: [
-        {title: 'Design a new website', person: 'Xuhao', due: '1st Feb 2022', status: 'ongoing',content:'lorem jadfihu j fdih uhjoa jfdj ' },
+        {title: 'Design a new website', person: 'XuHao', due: '1st Feb 2022', status: 'ongoing',content:'lorem jadfihu j fdih uhjoa jfdj ' },
         {title: 'Learn javascript', person: 'Ke', due: '21th Jan 2022', status: 'complete',content: 'lorem' },
-        {title: 'Have a lunch with professor', person: 'Xuhao', due: '1st Jan 2022', status: 'overdue',content: 'lorem' },
+        {title: 'Have a lunch with professor', person: 'XuHao', due: '1st Jan 2022', status: 'overdue',content: 'lorem' },
         {title: 'get to gym', person: 'Ke', due: '1st Jan 2022', status: 'overdue',content: 'lorem' },
       ]
     }
   },
+  created() {
+    db.collection('projects').onSnapshot(res => {
+      const changes = res.docChanges()
+      changes.forEach(change => {
+        if (change.type === 'added') {
+          this.projects.push({
+            ...change.doc.data()
+          })
+        }
+      })
+    })
+  },
   computed: {
     myProjects() {
       return this.projects.filter(project => {
-        return project.person === 'Xuhao'
+        return project.person === 'XuHao'
       })
     }
   }

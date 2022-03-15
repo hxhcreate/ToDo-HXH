@@ -55,17 +55,31 @@
 </template>
 
 <script>
+import db from "@/fb"
+
 export default {
   name: "Dashboard",
+
   data() {
     return {
-      projects: [
-        {title: 'Design a new website', person: 'Xuhao', due: '1st Feb 2022', status: 'ongoing'},
+      projects: [{title: 'Design a new website', person: 'Xuhao', due: '1st Feb 2022', status: 'ongoing'},
         {title: 'Learn javascript', person: 'Ke', due: '21th Jan 2022', status: 'complete'},
         {title: 'Have a lunch with professor', person: 'Xuhao', due: '1st Jan 2022', status: 'overdue'},
         {title: 'get to gym', person: 'Ke', due: '1st Jan 2022', status: 'overdue'},
       ]
     }
+  },
+  created() {
+    db.collection('projects').onSnapshot(res => {
+      const changes = res.docChanges()
+      changes.forEach(change => {
+        if (change.type === 'added') {
+          this.projects.push({
+            ...change.doc.data()
+          })
+        }
+      })
+    })
   },
   methods: {
     sortBy(prop){

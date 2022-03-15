@@ -1,5 +1,10 @@
 <template>
   <nav>
+    <v-snackbar v-model="snakeBar" :timeout="4000" top color="success">
+      <span>Awesome! You added a new project.</span>
+      <v-btn text color="black lighten-1" @click="snakeBar=false">Close</v-btn>
+    </v-snackbar>
+
     <v-app-bar app flat>
       <v-app-bar-nav-icon class="grey--text" @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-app-bar-title class="grey--text">
@@ -35,12 +40,12 @@
           <v-avatar size="75" class="center">
             <img src="/avatar-1.png">
           </v-avatar>
-          <p class="white--text subtitle-1 mt-1">
-            The Net XuHao
+          <p class="white--text body-1 mt-1">
+            XuHao
           </p>
         </v-flex>
         <v-flex class="mt-4 mb-3">
-          <Popup />
+          <Popup @projectAdded="snakeBar = true"/>
         </v-flex>
       </v-layout>
       <v-list>
@@ -72,6 +77,8 @@ export default {
         {icon: 'folder', text: 'My Projects', route: '/projects'},
         {icon: 'person', text: 'Team', route: '/team'},
       ],
+      //snakebar控制参数
+      snakeBar: false
     }
   }
 }
