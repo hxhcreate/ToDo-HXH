@@ -1,4 +1,7 @@
 # todo-hxh
+> 参照B站Vuetify油管教程 [链接](https://github.com/hxhcreate/ToDo-HXH)
+> 
+> 截止到2022.3 使用最新的vuetify  和  firebase  
 
 ## Project setup
 ```
