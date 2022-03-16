@@ -56,6 +56,7 @@
 
 <script>
 import db from "@/fb"
+import {collection, onSnapshot, query} from "firebase/firestore";
 
 export default {
   name: "Dashboard",
@@ -70,10 +71,10 @@ export default {
     }
   },
   created() {
-    db.collection('projects').onSnapshot(res => {
-      const changes = res.docChanges()
-      changes.forEach(change => {
-        if (change.type === 'added') {
+    const q = query(collection(db, 'projects'))
+    onSnapshot(q , (snapShop) => {
+      snapShop.docChanges().forEach((change) => {
+        if (change.type === "added") {
           this.projects.push({
             ...change.doc.data()
           })

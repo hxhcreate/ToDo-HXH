@@ -45,6 +45,7 @@
           </p>
         </v-flex>
         <v-flex class="mt-4 mb-3">
+<!--          添加触发事件  并且在Popup中使用js来触发-->
           <Popup @projectAdded="snakeBar = true"/>
         </v-flex>
       </v-layout>
