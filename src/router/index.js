@@ -23,11 +23,6 @@ const routes = [
     name: 'Team',
     component: () => import("../views/Team.vue")
   },
-  {
-    path: '/example',
-    name: 'Example',
-    component:() => import('../views/Example.vue')
-  }
 ]
 
 const router = new VueRouter({
